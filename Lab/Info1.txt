@@ -30,8 +30,29 @@ File => 04_Tempds18b20_2.ino
 ----
 05 Lux Meter (แสง)  - I2C   BH1750FVI
 V+5
-SDA->D2
-SCL->D1
-Addresss = 0x23
+SDA->D2 (4)
+SCL->D1  (5)
+Addresss = 0x23 / 
 Adress = 0x5C (Connect V+5 to Addr)
 --
+
+06 LCD / Light /  sht31 (Temp + Humidity)
+LCD Address =  สีน้ำเงิน (0x3F) => 5V  , สีเขียว (0x27 ) => 3.3 V
+Adafruit_SHT31 Address = 0x44
+
+---------
+07 Voltage_Ampare_Meter
+Rx -> D2 , Tx -> D1
+5V
+------
+08 PH Meter =>  A0 Analog
+
+Calibration
+PH=4 , measure Voltage = 3.28
+PH=9.18 , measure Vlotage = 2.94
+
+calulate slope => (9.18-4) / (2.94-3.28) =  -15.23529412  (slope) => replace float phValue =  -15.23529412 * pHVol + 54.28;
+Calibrate every 2 months
+
+
+
