@@ -54,5 +54,12 @@ PH=9.18 , measure Vlotage = 2.94
 calulate slope => (9.18-4) / (2.94-3.28) =  -15.23529412  (slope) => replace float phValue =  -15.23529412 * pHVol + 54.28;
 Calibrate every 2 months
 
+--------------
+09 Laching Solinoid
+D1 (5)  -> Relay  INT1 
+D2 (4)  -> Relay INT2
+ใช้กับ Motor ก็ได้ หมุน ซ้าย หยุด ขวา
+---
+10 
 
 
