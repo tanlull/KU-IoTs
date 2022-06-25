@@ -60,6 +60,18 @@ D1 (5)  -> Relay  INT1
 D2 (4)  -> Relay INT2
 ใช้กับ Motor ก็ได้ หมุน ซ้าย หยุด ขวา
 ---
-10 
+10 DC Motor with Switch
+ENA = 14; //D5;  ควบคุมไฟ
+IN1 = 12; //D6; , IN2 = 13; //D7; ควบคุม หมุนซ้ายขวา]
+Switch  = 5; //D1 กดเปิด กดปิด
+-----
+10 DC Motor with Speed  
+D1 (5) => botton up speed   (or press + at monitoring) 
+D2 (4)=>  button down speed (or press - at monitoring)
+
+---
+11 AC Dimmer Lib (ใช้ Library)
+D5 (14) => PSM
+D6 (12) => Z-C (zerocross)
 
 
