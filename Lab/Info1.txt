@@ -74,4 +74,22 @@ D2 (4)=>  button down speed (or press - at monitoring)
 D5 (14) => PSM
 D6 (12) => Z-C (zerocross)
 
+---
+13 RS-485 Modbus Relay 
+สำหรับการส่งสัญญาณระยะไกลและส่งได้หลายอุปกรณ์ 
+Board => 485  Relay 
+D2 => RxD , D3 => TxD , 3V => Vcc , GND => Gnd
+------------
+14 RS485 Temp Humidity
+SHT20
+Yellow =>  A , White => B 
+---------------
+15 Heater  (PWM - LED TEst)
+D => AnalogWrite
+--------------
+16 - Bangbang Heater
+D2 => Realy
+DTH , D1 (5)
+  -> Library DHT sensor Library  (Ada Fruit)
+
 
