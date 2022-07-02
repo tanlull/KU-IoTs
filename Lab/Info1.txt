@@ -92,4 +92,44 @@ D2 => Realy
 DTH , D1 (5)
   -> Library DHT sensor Library  (Ada Fruit)
 
+------------
+17_PIDTempControl  - 
+  + AC Light Dimmer module + Temp (DHT11)
+D5 (14) -> PWM  (Dimmer)
+D6 (12) -> C-Z (Dimmer)
+D2 (4) -> (out) Temp
 
+--- 
+18_01_RF_Hello_Tx /18_02_RF_Hello_Rx
+nRF24L01 (VCC = 3V ONLY!!!)
+ --- Receiver / Transmitter 
+1 - GND
+2 - Vcc 3V ONLY!!!
+3 CE -> D4
+4 CSN -> D8
+5 SCK -> D5
+6 MOSI -> D7
+7 MISO -> D6
+ 8 IRQ -> None
+---
+Transmitter -> Temp SHT15
+18_03_RF_Temp_Tx
+18_04_RF_Temp_Rx
+V 3.3V
+GND
+SCL -> D1
+SDA -> D2
+------
+18_05_RF_2Way_Gateway (com3)
+18_06_RF_2Way_Node (com5)
+
+Node -> Ralay
+2Way -> Tx -> Relay
+D0 -> Relay (IN1)
+
+Gateway -> Switch
+D1 -> Switch
+
+------------
+18_07_RF_Distance_Rx (com3)
+18_08_RF_Distance_Tx (com6)
