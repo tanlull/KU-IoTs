@@ -133,3 +133,5 @@ D1 -> Switch
 ------------
 18_07_RF_Distance_Rx (com3)
 18_08_RF_Distance_Tx (com6)
+
+Pin 16
