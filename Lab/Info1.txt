@@ -31,7 +31,7 @@ File => 04_Tempds18b20_2.ino
 05 Lux Meter (แสง)  - I2C   BH1750FVI
 V+5
 SDA->D2 (4)
-SCL->D1  (5)
+SCL->D1 (5)
 Addresss = 0x23 / 
 Adress = 0x5C (Connect V+5 to Addr)
 --
