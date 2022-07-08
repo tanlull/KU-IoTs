@@ -8,6 +8,7 @@
 #include <BH1750.h>
 #include "DHT.h"
 #include <BlynkSimpleEsp8266.h>
+
 BlynkTimer timer;
 
 // DHT
@@ -30,8 +31,10 @@ float light_lux;
 
 BH1750 lightMeter(0x23); // ADDR -> GND (0x23) , ADDR -> VCC (0x5C) , 
 
-const char* ssid = "Pakhun";
-const char* password = "022798129";
+const char* ssid = "ALIEN_2_2.4G";
+const char* password = "FF5754755";
+//const char* ssid = "Pakhun";
+//const char* password = "022798129";
 bool ledStatus = 0;
 String payload = "json data";
 int delayTime = 5000; // 5 s

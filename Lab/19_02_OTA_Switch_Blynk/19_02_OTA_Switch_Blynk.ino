@@ -7,9 +7,10 @@
 #define LED_DISP 16 //D0
 
 #define ON_OFF_SWITCH 5 //D1
-
-const char* ssid = "TAN P30 Pro";
-const char* password = "1234567890-=";
+const char* ssid = "ALIEN_2_2.4G";
+const char* password = "FF5754755";
+//const char* ssid = "TAN P30 Pro";
+//const char* password = "1234567890-=";
 bool ledStatus = 0;
 
 

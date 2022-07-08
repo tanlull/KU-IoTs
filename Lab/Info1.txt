@@ -2,7 +2,7 @@ ESP8266
 File -> Preference -> Add Board magager URL =>
 https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
-Tool => Board => NodeMCU 1.0
+Tool => Board => ESP8266 Board => NodeMCU 1.0
 -----
 
 01 WaterFlow
@@ -135,6 +135,9 @@ D1 -> Switch
 18_08_RF_Distance_Tx (com6)
 
 Pin 16
+
+
+
 
 
 Firebase : 
