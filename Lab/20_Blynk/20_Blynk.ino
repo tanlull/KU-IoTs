@@ -2,7 +2,7 @@
 #define BLYNK_TEMPLATE_ID "TMPLgYgVXgrp"
 #define BLYNK_DEVICE_NAME "Quickstart Template"
 #define BLYNK_AUTH_TOKEN "eUFlE7qMZSjkl7HEyV3s177OfCUqSP8x"
-#define ledBuildin 16
+#define ledBuildin 2
 #include <BlynkSimpleEsp8266.h>
 #include "DHT.h"
 float sensorVal;
@@ -13,9 +13,9 @@ float hif;
 float hic;
 
 BlynkTimer timer;
-#define DHTPIN 4 //D2
-
-#define DHTTYPE DHT11 
+#define DHTPIN 14 // D5
+//#define DHTTYPE DHT11   // DHT 11
+#define DHTTYPE DHT22 
 
 DHT dht(DHTPIN, DHTTYPE);
 void myTimer() 
@@ -26,8 +26,11 @@ void myTimer()
   Blynk.virtualWrite(V4, humi);   // Write humidity
 }
 
-const char* ssid = "TAN P30 Pro";
-const char* password = "1234567890-=";
+//const char* ssid = "TAN P30 Pro";
+//const char* password = "1234567890-=";
+
+const char* ssid = "Pakhun";
+const char* password = "022798129";
 void setup()
 {
   Serial.begin(115200);

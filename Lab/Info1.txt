@@ -135,3 +135,7 @@ D1 -> Switch
 18_08_RF_Distance_Tx (com6)
 
 Pin 16
+
+
+Firebase : 
+https://console.firebase.google.com/u/0/project/skoodio-ionic-react/database/skoodio-ionic-react-default-rtdb/data/~2F

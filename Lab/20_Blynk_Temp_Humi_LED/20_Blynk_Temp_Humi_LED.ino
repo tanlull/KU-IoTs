@@ -13,9 +13,9 @@ float hif;
 float hic;
 
 BlynkTimer timer;
-#define DHTPIN 4 //D2 Plug Temp to this pin
+#define DHTPIN 14 //D5 Plug Temp to this pin
 
-#define DHTTYPE DHT11 
+#define DHTTYPE DHT22 
 
 DHT dht(DHTPIN, DHTTYPE);
 void myTimer() 
