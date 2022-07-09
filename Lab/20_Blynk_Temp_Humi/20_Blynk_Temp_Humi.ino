@@ -15,7 +15,7 @@ float hic;
 BlynkTimer timer;
 #define DHTPIN 4 //D2 Plug Temp to this pin
 
-#define DHTTYPE DHT11 
+#define DHTTYPE DHT22
 
 DHT dht(DHTPIN, DHTTYPE);
 void myTimer() 
@@ -26,11 +26,12 @@ void myTimer()
   Blynk.virtualWrite(V4, humi);   // Write humidity
 }
 
-const char* ssid = "TAN P30 Pro";
-const char* password = "1234567890-=";
+const char* ssid = "Pakhun";
+const char* password = "022798129";
 void setup()
 {
   Serial.begin(115200);
+  while (!Serial);
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, password);
   Serial.println(F("DHTxx test!"));
   dht.begin();

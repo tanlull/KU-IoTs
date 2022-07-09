@@ -1,18 +1,24 @@
+// Board => Node MCU 1.0 
+
 
 #define BLYNK_PRINT Serial
 #define BLYNK_TEMPLATE_ID "TMPLgYgVXgrp"
 #define BLYNK_DEVICE_NAME "Quickstart Template"
 #define BLYNK_AUTH_TOKEN "eUFlE7qMZSjkl7HEyV3s177OfCUqSP8x"
 
+char thingsboardServer[] = "totws.com";
+#define TOKEN "X5OCQ5XI8qk4IhaEbcqh"
+
 #include <Wire.h>
 #include <BH1750.h>
 #include "DHT.h"
 #include <BlynkSimpleEsp8266.h>
-#include <PubSubClient.h>
-#include <ESP8266WiFi.h>
+#include <ThingsBoard.h>
 
-WiFiClient c;
 BlynkTimer timer;
+BlynkTimer timer2;
+
+ThingsBoard tb(_blynkWifiClient);
 
 // DHT
 #define DHTPIN 14   // D5
@@ -34,21 +40,22 @@ float light_lux;
 
 BH1750 lightMeter(0x23); // ADDR -> GND (0x23) , ADDR -> VCC (0x5C) , 
 
-const char* ssid = "ALIEN_2_2.4G";
-const char* password = "FF5754755";
-//const char* ssid = "Pakhun";
-//const char* password = "022798129";
+//const char* ssid = "ALIEN_2_2.4G";
+//const char* password = "FF5754755";
+const char* ssid = "Pakhun";
+const char* password = "022798129";
 bool ledStatus = 0;
 String payload = "json data";
-int delayTime = 5000; // 5 s
+long readDataTime = 5000; // 50 s
+long ledBlinkTime = 2000; // 50 s
 
+int status = WL_IDLE_STATUS;
 
 void setup() {
   Serial.begin(115200);
   while (!Serial); // time to get serial running
   Serial.println(F("Serial Ready!"));
   //attachInterrupt(ON_OFF_SWITCH, switchLED, RISING); 
-  //startWifi();
   pinMode(LED_DISP, OUTPUT);
   dht.begin();
   Wire.begin(D2,D1); // SDA, SCL  
@@ -58,19 +65,26 @@ void setup() {
       Serial.println(F("Error initialising BH1750"));
     }
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, password);
-  timer.setInterval(delayTime, readSensorData); 
+  timer.setInterval(readDataTime, readSensorData); 
+  timer2.setInterval(ledBlinkTime, blinkLED); 
 }
 
 void loop() {
 
    Blynk.run();
+     if ( !tb.connected() ) {
+      //Serial.println("Thingsboard NOT Connected");
+     reconnect();
+  }
+   tb.loop();
    timer.run(); 
+   timer2.run(); 
 }
 
 void readSensorData(){
    readDHTData();
    readLux();
-   disPlayLED();
+   disPlayLED(100);
    update2BLYNK();
 }
 
@@ -81,24 +95,15 @@ void update2BLYNK()
   Blynk.virtualWrite(V1, temp_c);   // Write temp
   Blynk.virtualWrite(V4, humi);   // Write humidity
   Blynk.virtualWrite(V5, light_lux);   // Write Light
+  Blynk.virtualWrite(V6, real_c);   // Real feel
+
+
+  tb.sendTelemetryFloat("temperature", temp_c);
+  tb.sendTelemetryFloat("humidity", humi);
+  tb.sendTelemetryFloat("light", light_lux);
+  tb.sendTelemetryFloat("real_feel", real_c);
 }
 
-//void startWifi(){
-//  WiFi.begin(ssid, password);
-//  Serial.print("WiFi Connecting..");
-//  while (WiFi.status() != WL_CONNECTED) {
-//    Serial.print(".");
-//    digitalWrite(LED_DISP, LOW);
-//    delay(250);
-//    digitalWrite(LED_DISP, HIGH);
-//    delay(250);
-//  }
-//  Serial.println("Connected");
-//
-//  Serial.println("Ready");
-//  Serial.print("IP address: ");
-//  Serial.println(WiFi.localIP());
-//}
 
 void readDHTData(){
   // Reading temperature or humidity takes about 250 milliseconds!
@@ -139,14 +144,17 @@ void publishString(String data){
   //client.publish(topic, &Buf[0]);
 }
 
-void disPlayLED(){
+void blinkLED(){
+  disPlayLED(200);
+}
+
+
+void disPlayLED(int delayTime){
     //Serial.println("LED Blink OFF");
     digitalWrite(LED_DISP, LOW);
-    delay(200);
+    delay(delayTime);
     //Serial.println("LED Blink ON");
     digitalWrite(LED_DISP, HIGH);
-    delay(200);
-    
 }
 
 ICACHE_RAM_ATTR void switchLED(){
@@ -165,4 +173,29 @@ float readLux(){
 //  Serial.print(lux);
 //  Serial.println(" lx");
   return lux;
+}
+
+
+void reconnect() {
+  // Loop until we're reconnected
+  while (!tb.connected()) {
+    status = WiFi.status();
+    if ( status != WL_CONNECTED) {
+      WiFi.begin(ssid, password);
+      while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+      }
+      Serial.println("Connected to AP");
+    }
+    Serial.print("Connecting to ThingsBoard node ...");
+    if ( tb.connect(thingsboardServer,TOKEN, 1883,"esp8266-th-client",NULL) ) {
+      Serial.println( "[DONE]" );
+    } else {
+      Serial.print( "[FAILED]" );
+      Serial.println( " : retrying in 5 seconds]" );
+      // Wait 5 seconds before retrying
+      delay( 5000 );
+    }
+  }
 }

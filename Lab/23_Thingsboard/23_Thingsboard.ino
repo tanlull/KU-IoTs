@@ -1,3 +1,5 @@
+// Board Generic ESP8266 Module
+
 #include "DHT.h"
 #include <ESP8266WiFi.h>
 #include <ThingsBoard.h>
