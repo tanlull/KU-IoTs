@@ -9,6 +9,7 @@
 #include "DHT.h"
 #include <BlynkSimpleEsp8266.h>
 BlynkTimer timer;
+BlynkTimer timer2;
 
 // DHT
 #define DHTPIN 14   // D5
@@ -34,7 +35,8 @@ const char* ssid = "Pakhun";
 const char* password = "022798129";
 bool ledStatus = 0;
 String payload = "json data";
-int delayTime = 5000; // 5 s
+long readDataTime = 15000; // 50 s
+long ledBlinkTime = 2000; // 50 s
 
 
 void setup() {
@@ -52,19 +54,21 @@ void setup() {
       Serial.println(F("Error initialising BH1750"));
     }
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, password);
-  timer.setInterval(delayTime, readSensorData); 
+  timer.setInterval(readDataTime, readSensorData); 
+  timer2.setInterval(ledBlinkTime, blinkLED); 
 }
 
 void loop() {
 
    Blynk.run();
    timer.run(); 
+   timer2.run(); 
 }
 
 void readSensorData(){
    readDHTData();
    readLux();
-   disPlayLED();
+   disPlayLED(100);
    update2BLYNK();
 }
 
@@ -133,14 +137,17 @@ void publishString(String data){
   //client.publish(topic, &Buf[0]);
 }
 
-void disPlayLED(){
+void blinkLED(){
+  disPlayLED(200);
+}
+
+
+void disPlayLED(int delayTime){
     //Serial.println("LED Blink OFF");
     digitalWrite(LED_DISP, LOW);
-    delay(200);
+    delay(delayTime);
     //Serial.println("LED Blink ON");
     digitalWrite(LED_DISP, HIGH);
-    delay(200);
-    
 }
 
 ICACHE_RAM_ATTR void switchLED(){

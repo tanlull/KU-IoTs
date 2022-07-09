@@ -21,7 +21,7 @@ void loop() {
  
     HTTPClient http;    //Declare object of class HTTPClient
  
-    http.begin("http://192.168.1.88:8085/hello");      //Specify request destination
+    http.begin("http://192.168.0.112:8080/hello");      //Specify request destination
     http.addHeader("Content-Type", "text/plain");  //Specify content-type header
  
     int httpCode = http.POST("Message from ESP8266");   //Send the request
